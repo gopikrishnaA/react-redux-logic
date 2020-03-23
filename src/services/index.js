@@ -1,35 +1,46 @@
+import store from "../store";
+import { showLoader, hideLoader } from "../reducers/loading";
+import { baseUrl } from "./urls";
 
-import store from '../store'
-import {
-  showLoader,
-  hideLoader
-} from '../reducers/loading'
+const invokeService = ({ serviceUrl, method = "GET", requestData }) => {
+  console.log("serviceName is ", serviceUrl);
+  console.log("requestData is ", requestData);
 
-const invokeService = ({ serviceUrl, method = 'GET', requestData }) => {
-  console.log('serviceName is ', serviceUrl)
-  console.log('requestData is ', requestData)
-  const body = requestData ? JSON.stringify(requestData) : {}
-  store.dispatch(showLoader())
-  return fetch(serviceUrl, // eslint-disable-line
+  const data = requestData ? JSON.stringify(requestData) : {};
+
+  // Show loading icon
+  store.dispatch(showLoader());
+
+  // sent body object based on method
+  const body = method !== "GET" && method !== "DELETE" ? { body: data } : {};
+
+  // sent headers based on serviceUrl
+  const headers =
+    serviceUrl !== baseUrl
+      ? {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      : { Accept: "application/json" };
+  return fetch(
+    serviceUrl, // eslint-disable-line
     {
       method,
-      headers: {
-        'Accept': 'application/json'
-      },
+      headers,
       ...body
-    })
+    }
+  )
     .then(response => {
-      store.dispatch(hideLoader())
-      console.log('response :::: ', response)
+      store.dispatch(hideLoader());
+      console.log("response :::: ", response);
       if (!response.ok) {
-        throw Error(response.statusText)
+        throw Error(response.statusText);
       }
-      return response.json()
+      return response.json();
     })
     .catch(error => {
-      store.dispatch(hideLoader())
-      console.log('fetch error ::: ', error)
-    }
-    )
-}
-export default invokeService
+      store.dispatch(hideLoader());
+      console.log("fetch error ::: ", error);
+    });
+};
+export default invokeService;

@@ -13,7 +13,6 @@ class Pure extends Component {
       id,
       joke,
       statusUpdate = () => {},
-      items,
       navigate = () => {}
     } = this.props
     return (
@@ -23,7 +22,7 @@ class Pure extends Component {
           <div className='App-button' >
             <button data-qa='like' onClick={() => statusUpdate({ id, joke, status: 'Like' })}>Like</button>
             <button data-qa='unlike' onClick={() => statusUpdate({ id, joke, status: 'Unlike' })}>Unlike</button>
-            <button data-qa='summary' disabled={Object.keys(items).length < 1} onClick={() => navigate()} >Summary</button>
+            <button data-qa='summary' onClick={() => navigate()} >Summary</button>
             <button data-qa='refresh'  onClick={() => statusUpdate({ id, joke, status: 'New' })} >Refresh</button>
           </div>
         </header>
@@ -34,8 +33,7 @@ class Pure extends Component {
 
 const state = ({ login }) => ({
   joke: login.joke,
-  id: login.id,
-  items: login.items
+  id: login.id
 })
 
 const dispatch = (dispatch) => ({
@@ -46,8 +44,7 @@ const dispatch = (dispatch) => ({
 
 Pure.propTypes = {
   joke: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  items: PropTypes.object.isRequired
+  id: PropTypes.string.isRequired
 }
 
 export const LoginPage = connect(state, dispatch)(Pure)

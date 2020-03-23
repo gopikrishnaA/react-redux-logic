@@ -27,6 +27,34 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### Run server
+
+#### Features
+
+* Babel 7
+* Environment Variables
+* Express
+* REST API
+* MongoDB
+
+#### Installation
+
+* `cd server`
+* `npm install`
+* [start MongoDB](https://www.robinwieruch.de/mongodb-express-setup-tutorial/)
+* `npm start`
+* optional: include *.env* in your *.gitignore*
+
+Added Express server running on the port `8080`. Which is integrated with Node-Js, Mango-DB and Express. 
+
+The `api` uri preceed all API endpoints and the following endpoints are currently available
+* GET `/api/jokes`
+* POST `/api/jokes`
+* GET `/api/jokes/:joke_id`
+* PUT `/api/jokes/:joke_id`
+* DELETE `/api/contacts/:joke_id`
+* POST `/api/delete`
+
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**

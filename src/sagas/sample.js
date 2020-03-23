@@ -6,7 +6,7 @@ import invokeService from '../services'
 import { createSagaWatcher } from './createSagaWatcher'
 
 // Actions
-import { onLikeAction, onSuccess, onSucessAction } from '../actions'
+import { onLikeAction, onSucessAction } from '../actions'
 export const sampleAction = createAction('SAMPLE_ACTION')
 
 /** --------------------------------------------------
@@ -25,11 +25,11 @@ export const sagas = {
     },
     [onLikeAction]: function * ({ payload }) {
       if (payload.route === 'login') {
-        yield put(onSuccess(payload))
+        // yield put(onSuccess(payload))
         yield put(push('/login'))
       } else {
         yield put(sampleAction())
-        yield put(onSuccess(payload))
+        // yield put(onSuccess(payload))
       }
     }
   }
